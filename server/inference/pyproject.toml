@@ -1,0 +1,14 @@
+[project]
+name = "server-2"
+version = "0.1.0"
+description = "Webcam YOLO segmentation + fallen-person and fire detection"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "ultralytics>=8.3.0",
+    "opencv-python>=4.8.0",
+    "openvino>=2024.0.0",
+    "fastapi>=0.136.3",
+    "uvicorn>=0.48.0",
+    "pyserial>=3.5",
+]

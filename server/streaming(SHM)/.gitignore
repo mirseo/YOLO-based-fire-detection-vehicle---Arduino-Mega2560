@@ -1,0 +1,7 @@
+/target/*
+!/target/release
+!/target/debug
+/target/release/*
+!/target/release/streaming.exe
+/target/debug/*
+!/target/debug/streaming.exe
