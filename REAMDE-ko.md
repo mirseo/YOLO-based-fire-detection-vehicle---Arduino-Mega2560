@@ -73,7 +73,10 @@ CloudFlare AI의 경우 추론 속도가 너무 낮아 기각했습니다.
 
 거리 센서가 이상한데 화재 데이터는 있고, 연기는 없어서 저렇게 인식하더라구요  
 
-개인적으로는 재미있는 프로젝트였습니다.
+개인적으로는 재미있는 프로젝트였습니다.  
 
 ### 전체 구조
 ![Main Structure](./images/9.png)
+
+### 구동부 데모 
+https://github.com/user-attachments/assets/0b165ec7-81a9-45d6-851e-baef78cae3e1
