@@ -78,4 +78,9 @@ Personally, I found this to be an interesting project.
 English is not my native language, so I used a translator; the wording might sound a bit awkward.  
 
 ### Main Structure
-![Main Structure](./images/9-en.png)
+![Main Structure](./images/9-en.png)  
+
+### Control Preview
+https://github.com/user-attachments/assets/0b165ec7-81a9-45d6-851e-baef78cae3e1
+
+
