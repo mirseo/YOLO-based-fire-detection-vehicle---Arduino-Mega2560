@@ -1,72 +1,75 @@
 # Your Environment Project 
-( 재난 현장 엣지 AI 실시간 탐사로봇 )
+(Real-Time Edge AI Exploration Robot for Disaster Sites)
 
-### 개요 
-이 프로젝트는 화재 현장에서 고생하시는 소방관 분들을 생각하며 만든 프로젝트로,  
-본 개발자가 재학 중인 대학교에서 엣지-컴퓨팅 과목에 대한 과제물로서 개발하였습니다.  
+[한국어는 여기로!](./REAMDE-ko.md)
 
-![전체 프리뷰](./images/image-1.png)
+### Overview 
+This project was created with firefighters working on fire scenes in mind,  
+and was developed as an assignment for an edge computing course at the university where the developer is currently enrolled.  
 
-### 주요 특징
-1. Yolo를 파인튜닝하여 AI 기반의 추론 수행
-2. 8 Bit 양자화를 통한 저사양 기기 구동 설정
-3. LTE 기반 네트워크
-4. WS, WebRTC 기반 원격 제어
-5. LLM 요약
+![Full Preview](./images/image-1.png)
 
-### 설명
-이 프로젝트를 수행함에 있어서, 관련 기술 스택의 세부 설명입니다.
+### Key Features
+1. AI-based inference using a fine-tuned YOLO model
+2. Optimized for low-spec devices via 8-bit quantization
+3. LTE-based network
+4. Remote control via WS and WebRTC
+5. LLM summarization
 
-(Yolo 기반의 파인튜닝)  
-화재 현장에서 가장 위험한 분들은 인명 구조를 위해 힘쓰시는 소방관 분들이라고 생각합니다.  
-얇은 보호 장비에만 의존한 채 목숨을 걸고 사람들을 구하시지만, 이러한 재난 현장에서는 화재 현장 내부가 어떤지 전혀 알 수 없는 경우가 많습니다. 이에, 본 로봇이 투입되는 경우 로봇이 탑재한 다양한 센서 (수위 센서, 온도 센서(5개, DHT11), 가스 센서, 동작 감지 센서, 초음파 센서, 카메라) 등을 통해 탐지된 다양한 데이터와 AI 세그먼테이션 모델인 욜로(YOLO)를 활용하여 화재 현장에 있어서 다양한 정보를 소방대원들에게 빠르게 제공하고자 하였습니다.  
+### Description
+This section provides a detailed explanation of the relevant technology stack used in this project.
 
-![Yolo Fine-Tune](./images/image-2.png)
+(YOLO-Based Fine-Tuning)  
+I believe that firefighters, who risk their lives to save others, are the people most at risk at fire scenes.  
+They save people while risking their own lives, relying only on thin protective gear, but at such disaster sites, it is often impossible to know what conditions are like inside the fire. Therefore, when this robot is deployed, we aimed to quickly provide firefighters with various pieces of information about the fire scene by utilizing data detected by the robot’s various sensors (water level sensor, temperature sensors (5 units, DHT11), gas sensor, motion detection sensor, ultrasonic sensor, camera) and the AI segmentation model YOLO.  
 
-(8 비트 양자화를 통한 저사양 기기 구동 설정)  
-이 프로젝트를 하면서 느낀 점은 Edge-AI는 무심하다. 라는 점입니다.  
-왜냐하면 무심하게도 사양이 낮은 기기인 라떼판다(LattePanda Alpha)에서는 최신형 Yolo26을 파인튜닝 없이 굴리는 작업에서도 버벅이다 못해 15프레임이 나오기 일쑤였습니다.  
+![YOLO Fine-Tune](./images/image-2.png)
 
-이 프로젝트는 소방대원을 위한 프로젝트인데, 실시간이 아니라면 의미가 없어 이를 보완하고자 탑재된 i615 GPU를 활용하여 가속하기 위해 OpenVino 기반의 8비트 양자화를 수행하여 45~60 프레임의 결과를 얻었습니다.  
+(Configuration for running on low-spec devices via 8-bit quantization)  
+What I realized while working on this project is that Edge-AI is unforgiving.  
+This is because, even on a low-spec device like the LattePanda Alpha, running the latest YOLO26 without fine-tuning often resulted in stuttering performance, frequently dropping to just 15 frames per second.  
 
-굴러다니던 코랄을 최대한 활용하려고 하였으나 생각보다 결과가 나쁘던 관계로 마지막에는 일부 제거되었습니다.  
+Since this project is intended for firefighters and would be meaningless if not real-time I implemented OpenVino-based 8-bit quantization to accelerate processing using the built-in i615 GPU, achieving a frame rate of 45–60 frames per second.  
+
+I initially tried to make the most of the Coral module I had on hand, but since the results were worse than expected, I ended up removing some of it in the final version.  
 
 ![Structure](./images/image-3.png)
 
-(LTE 기반 네트워크)  
-LTE 기반 네트워크를 선택한 이유는 간단합니다. 화재 현장에서 Wifi, Wifi-Direct, BlueTooth, UWB(Ultra Wide Band)의 지원을 고려할 수 없기 때문입니다.  
-불은 많은 양의 전파를 방출할 수 있고, 이는 신호 안정성과 무결성을 크게 저해시키는 문제가 있다고 찾아보며 알게 되었습니다.  
+(LTE-based network)  
+The reason for choosing an LTE-based network is simple: at a fire scene, we cannot rely on Wi-Fi, Wi-Fi Direct, Bluetooth, or UWB (Ultra Wide Band).  
+I learned through my research that fires can emit large amounts of radio waves, which significantly impair signal stability and integrity.  
 
-간단하게 주파수 교란 문제인데, 이를 해결하는 가장 빠른 방법은 그냥 LTE 처럼 고전력의 전파를 쏘면 되는 거였습니다.  
+Simply put, it’s a matter of frequency interference, and the quickest way to solve this was to transmit high-power radio waves, just like LTE does.  
 
-이에 따라 LTE 네트워크를 사용하기 위해 USB C 허브와 테더링으로 스마트폰을 연결하여 RJ45 타입으로 원격 제어를 위해서 라떼판다에 인터넷을 공급하였습니다.  
+Accordingly, to use the LTE network, I connected my smartphone via a USB-C hub and tethering to provide internet access to the LattePanda via an RJ45 connection for remote control.  
 
-P.s 이거 하다가 시연 중에 소중한 데이터 **2.3GB**가 녹아내렸습니다. ㅠ  
+P.S. While working on this, **2.3 GB** of precious data melted away during a demo. T_T  
 
-(WS, WebRTC 기반 제어)  
-사실 이 부분은 하다 보니 구현이 변경된 부분입니다. 
-원래는 HTTP Plain 통신으로 하려고 했었거든요. 
-다만, 앞에서 언급했듯 라떼판다는 이 정도의 데이터 통신을 견딜 여력이 부족했고, 이에 따라 HTTP Plain방식은 조작에 대한 심각한 딜레이 (4초~)를 유발하였습니다.  
+(WS, WebRTC-based control)  
+Actually, this part ended up being implemented differently as I worked on it. 
+Originally, I had planned to use plain HTTP communication. 
+However, as mentioned earlier, the LattePanda lacked the capacity to handle this level of data traffic, and as a result, the plain HTTP method caused significant delays (4 seconds or more) in operation.  
 
-제가 디버깅한 바에 따르면 문제는 SOCKET 이 재연결되면서 발생했습니다.
-일반적인 경우라면 문제가 되지 않아야 하지만, 이 친구는 CPU 99~100% 상황에 놓여 있어 딜레이가 발생하고 있었던 것입니다.  
+Based on my debugging, the problem occurred when the socket reconnected.
+Under normal circumstances, this shouldn’t be a problem, but since the device was operating at 99–100% CPU utilization, it was causing delays.  
 
-그래서 WS를 통해 항시 연결을 유지하였습니다.  
+So, I maintained a constant connection via WebSocket.  
 
-WebRTC는 간단한 이유이지만, 원격지에서 로봇의 센서 데이터를 입수하고, 세그먼테이션된 데이터를 확인할 수 있도록 하기 위해 투입되었습니다.  
+WebRTC was implemented for a simple reason: to retrieve sensor data from the robot remotely and verify the segmented data.  
 
 ![WebRTC](./images/image-4.png)
 
-(LLM 요약)  
-제일 화룡점정인 부분으로, 센서 데이터를 수집한 이유입니다.  
-마지막에 수집된 데이터를 바탕으로 Claude Code 에 claude -p 형태로 명령을 전달하여 기존 구독 플랜의 사용량을 이용하면서도 별도 API 연동 없이 구현하였습니다.  
+(LLM Summary)  
+This is the real highlight the reason for collecting sensor data.  
+At the end, based on the collected data, we sent a command to Claude Code in the format `claude -p`, implementing the solution using our existing subscription plan without the need for separate API integration.  
 
-CloudFlare AI의 경우 추론 속도가 너무 낮아 기각했습니다.
+We ruled out CloudFlare AI because its inference speed was too slow.
 
-![AI 추론 영상](./images/image-5.png)
-하다 보니 알게 되었는데 이유를 모르겠지만 간헐적으로 가스 센서가 죽는(...) 문제가 있었습니다. 보다 자세히는 가스가 없어도 가스가 있다고 인식했는데, 이게 진짜인건지 아닌 건지 (연구실이다 보니 가스가 있을 수도 있음) 구분이 어려웠긴 했습니다.  
+![AI Inference Video](./images/image-5.png)
+As we were working on this, we discovered though we’re not sure why that the gas sensor would occasionally “die” (…). More specifically, it would detect gas even when there was none, and it was difficult to tell whether this was accurate or not (since it’s a lab, there might actually be gas present).  
 
-거리 센서가 이상한데 화재 데이터는 있고, 연기는 없어서 저렇게 인식하더라구요  
+The distance sensor was acting up, but since there was fire data and no smoke, it recognized the situation that way.  
 
-개인적으로는 재미있는 프로젝트였습니다.
+Personally, I found this to be an interesting project.
 
+English is not my native language, so I used a translator; the wording might sound a bit awkward.  
