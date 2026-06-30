@@ -33,7 +33,7 @@ Since this project is intended for firefighters and would be meaningless if not 
 
 I initially tried to make the most of the Coral module I had on hand, but since the results were worse than expected, I ended up removing some of it in the final version.  
 
-![Structure](./images/image-3.png)
+![Structure](./images/image-en.png)
 
 (LTE-based network)  
 The reason for choosing an LTE-based network is simple: at a fire scene, we cannot rely on Wi-Fi, Wi-Fi Direct, Bluetooth, or UWB (Ultra Wide Band).  
