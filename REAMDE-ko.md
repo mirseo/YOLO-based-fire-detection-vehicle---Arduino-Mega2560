@@ -72,3 +72,5 @@ CloudFlare AI의 경우 추론 속도가 너무 낮아 기각했습니다.
 
 개인적으로는 재미있는 프로젝트였습니다.
 
+### 전체 구조
+![Main Structure](./images/9.png)
